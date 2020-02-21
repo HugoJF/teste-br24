@@ -12,5 +12,5 @@
 */
 
 Route::get('/', 'RegisterController@create')->name('index');
-Route::get('create', 'RegisterController@create')->name('create');
+Route::get('register', 'RegisterController@create')->name('create');
 Route::post('/', 'RegisterController@store')->name('store');
