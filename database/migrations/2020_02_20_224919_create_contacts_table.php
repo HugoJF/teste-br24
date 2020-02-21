@@ -14,7 +14,7 @@ class CreateContactsTable extends Migration
     public function up()
     {
         Schema::create('contacts', function (Blueprint $table) {
-            $table->unsignedInteger('cpf')->unique();
+            $table->unsignedBigInteger('cpf')->unique();
             $table->unsignedInteger('bitrix_id')->nullable();
 
             $table->string('name');

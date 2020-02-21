@@ -16,10 +16,10 @@ class CreateCompanyContactTable extends Migration
         Schema::create('company_contact', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedInteger('company_cnpj');
+            $table->unsignedBigInteger('company_cnpj');
             $table->foreign('company_cnpj')->references('cnpj')->on('companies');
 
-            $table->unsignedInteger('contact_cpf');
+            $table->unsignedBigInteger('contact_cpf');
             $table->foreign('contact_cpf')->references('cpf')->on('contacts');
 
             $table->unique(['company_cnpj', 'contact_cpf']);

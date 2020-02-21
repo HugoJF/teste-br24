@@ -14,7 +14,7 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->unsignedInteger('cnpj')->unique();
+            $table->unsignedBigInteger('cnpj')->unique();
             $table->unsignedInteger('bitrix_id')->nullable();
 
             $table->string('name');
