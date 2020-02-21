@@ -10,8 +10,6 @@ class RegisterController extends Controller
 {
     public function create()
     {
-        flash()->success('Contato e Companhia registrados!');
-
         $companies = Company::with('contacts')->get();
 
         return view('form', compact('companies'));
