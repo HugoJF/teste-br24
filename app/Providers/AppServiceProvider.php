@@ -7,6 +7,7 @@ use App\Contact;
 use App\Observers\CompanyObserver;
 use App\Observers\ContactObserver;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,13 +28,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->updateStringLength();
         $this->registerObservers();
+    }
+
+    /**
+     * Update defaultStringLength to support MariaDB
+     */
+    protected function updateStringLength(): void
+    {
+        Schema::defaultStringLength(191);
     }
 
     /**
      * Register observers used to keep Bitrix24 up-to-date
      */
-    protected function registerObservers()
+    protected function registerObservers(): void
     {
         Company::observe(CompanyObserver::class);
         Contact::observe(ContactObserver::class);
