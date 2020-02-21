@@ -10,8 +10,6 @@
 </head>
 <body class="bg-light">
 <div class="container">
-    @include('flash::message')
-
     @yield('content')
 </div>
 <script src="{{ mix('js/app.js') }}"></script>

@@ -6,6 +6,8 @@
             <div class="row justify-content-center">
 
                 <h2 class="m-3 text-center">Registro de contato</h2>
+                
+                @include('flash::message')
 
                 {!! Form::open(['method' => 'POST', 'route' => 'store']) !!}
                 <div class="row">

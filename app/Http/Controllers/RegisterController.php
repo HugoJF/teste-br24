@@ -10,6 +10,8 @@ class RegisterController extends Controller
 {
     public function create()
     {
+        flash()->success('Contato e Companhia registrados!');
+
         $companies = Company::with('contacts')->get();
 
         return view('form', compact('companies'));
@@ -18,6 +20,8 @@ class RegisterController extends Controller
     public function store(RegisterRequest $request, RegisterService $service)
     {
         $service->handle($request->companyInput(), $request->contactInput());
+
+        flash()->success('Contato e Companhia registrados!');
 
         return redirect()->route('index');
     }
