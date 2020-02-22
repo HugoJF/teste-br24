@@ -1,78 +1,38 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Teste de Desenvolvimento - Br24
+Teste técnico realizado para o processo de seleção da Br24.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Observações
+Considerações e decisões tomadas durante o desenvolvimento.
 
-## About Laravel
+#### Utilização dos Requests para separação dos dados do formulário
+Como o formulário contém informações de duas entidades, foi utilizado recurso de classes de `Requests`, que remove código de validação de dentro dos controladores, e permite criação de métodos para separação e renomeação dos dados dos formulários para facilitar utilização do método `fill()` nos models.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#### Verificação do token de autenticação da Bitrix24 nos webhooks
+Para verificar autenticidade dos webhooks, a Bitrix24 envia um token de autenticação em todos os requests de webhooks de saída, que devem ser verificados antes de serem processados.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Para isso foi definido um novo arquivo de rotas, chamado `webhooks`, que são carregados com um conjunto de `Middleware` semelhantes ao do conjunto `API`, com adição de um middleware que realiza a verificação do token de autenticação antes da requisição chegar no controladores.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### Laravel Mix
+Para unificar os arquivos carregados pela página de layout, foi utilizado Laravel Mix, onde qualquer dependência CSS ou Javascript, possa ser concatenado e minificado em ambiente de produção.
 
-## Learning Laravel
+#### Regras de validação de CPF e CNPJ
+As regras customizadas de validação de CPF e CNPJ foram importadas utilizando o pacote `laravellegends/pt-br-validator` que também validam o formato. Por causa disso a biblioteca `inputmask` foi adicionada para manter a formatação nos campos do formulário e auxiliar o usuário ao completar o campo.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Falta de testes
+Diversas funcionalidades da aplicação poderiam ser facilmente testadas para garantir o funcionamento entre atualizações. Devido ao curto tempo disponível para implementação da aplicação, não foi possível implementar testes automatizados.
 
-## Laravel Sponsors
+#### Possibilidade de um design melhor
+O plano inicial era desenvolver um design totalmente novo utilizando o framework TailwindCSS. Essa ideia foi rapidamente descartada devido à falta de tempo. Como substituição, foi utilizado o framework Bootstrap, que conta com diversos componentes prontos e testados em diversos navegadores.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### API da Bitrix24
+Para uma aplicação final, seria necessário implementar um pacote mais robusto da API da Bitrix24, visto que muitas funcionalidades essenciais dependem nessa integração.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+#### Colunas customizadas da Bitrix24
+A identificação das colunas customizadas da plataforma Bitrix24 foram passadas como uma configuração manual. Para uma aplicação mais robusta, seria necessário detecção automática dessas colunas pelo nome usando o endpoint de `fields` da Bitrix24.
 
-## Contributing
+#### Documentação
+A documentação de toda aplicação foi feita em inglês, com intuito de manter melhor consistência com o código e documentação existente no framework. 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Componentizar elementos do Form
+Os componentes individuais do formulário podem ser componentizados de uma forma a facilitar manutenção futura da aplicação.
